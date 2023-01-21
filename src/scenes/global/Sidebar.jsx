@@ -1,12 +1,4 @@
 import { useState } from "react";
-// import { ProSidebarProvider, Menu, MenuItem } from "react-pro-sidebar";
-// import {
-//   AccountCircle,
-//   Home,
-//   ExitToApp,
-//   Brightness4,
-// } from "@material-ui/icons";
-import MuiDrawer from "@mui/material/Drawer";
 import {
   Box,
   IconButton,
@@ -14,45 +6,69 @@ import {
   useTheme,
   Drawer,
   List,
-  ListItem,
   ListItemIcon,
-  ListItemText,
-  styled,
-  Modal,
+  ListItemButton,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-// import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-// import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-// import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-// import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-// import CalendarOutlinedIcon from "@mui/icons-material/CalendarOutlined";
-// import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined";
-// import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-// import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-// import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
+import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
+import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined";
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
+import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-// import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-const drawerWidth = 240;
+import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+
+const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  return (
+    <ListItemButton
+      sx={{
+        mb: "10px",
+      }}
+      selected={selected === title}
+      style={{
+        color: colors.grey[100],
+      }}
+      onClick={() => setSelected(title)}
+      icon={icon}
+    >
+      <ListItemIcon
+        sx={{
+          minWidth: "0",
+          pr: "15px",
+          // pb: "10px",
+        }}
+      >
+        {icon}
+      </ListItemIcon>
+      {isCollapsed ? <Typography>{title}</Typography> : null}
+      <Link to={to} />
+    </ListItemButton>
+  );
+};
 
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selected, isSelected] = useState("Dashboard");
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [selected, setSelected] = useState("Dashboard");
 
   const handleOpen = () => {
-    setIsOpen(true);
+    setIsCollapsed(true);
   };
 
   const handleClose = () => {
-    setIsOpen(false);
+    setIsCollapsed(false);
   };
-  const toggleDrawer = (toggle) => {
-    // console.log();
-    setIsOpen(!isOpen);
+  const toggleDrawer = () => {
+    setIsCollapsed(!isCollapsed);
   };
 
   return (
@@ -62,8 +78,7 @@ const Sidebar = () => {
         sx={{
           display: { xs: "block", sm: "block" },
           "& .MuiDrawer-paper": {
-            // position: "absolute",
-            // whiteSpace: "nowrap",
+            background: `${colors.primary[400]} !important`,
             width: "auto",
             transition: (theme) =>
               theme.transitions.create("width", {
@@ -71,7 +86,7 @@ const Sidebar = () => {
                 duration: theme.transitions.duration.enteringScreen,
               }),
             boxSizing: "border-box",
-            ...(!isOpen && {
+            ...(!isCollapsed && {
               overflowX: "hidden",
               transition: (theme) =>
                 theme.transitions.create("width", {
@@ -80,16 +95,16 @@ const Sidebar = () => {
                 }),
               width: (theme) => ({
                 xs: theme.spacing(11),
-                sm: theme.spacing(11),
+                sm: theme.spacing(12),
               }),
             }),
           },
         }}
-        open={isOpen}
+        open={isCollapsed}
         onClose={handleClose}
       >
-        <Box sx={{ px: isOpen === true ? 5 : 2, width: "auto" }}>
-          {isOpen ? (
+        <Box sx={{ px: isCollapsed === true ? 5 : 2, width: "auto" }}>
+          {isCollapsed ? (
             <Box mt="15px">
               {/* <Typography variant="h3" color={colors.grey[100]}>
                   ADMIN
@@ -107,8 +122,7 @@ const Sidebar = () => {
           )}
 
           <List>
-            {isOpen ? (
-              //
+            {isCollapsed ? (
               <Box mb="25px">
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <img
@@ -157,40 +171,119 @@ const Sidebar = () => {
               </Box>
             )}
             {/* <List> */}
-            <ListItem>
-              <ListItemIcon>
-                <HomeOutlinedIcon />
-              </ListItemIcon>
-              {isOpen ? <ListItemText primary="Home" /> : null}
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <HomeOutlinedIcon />
-              </ListItemIcon>
-              {isOpen ? <ListItemText primary="Profile" /> : null}
-            </ListItem>
-          </List>
-          <hr />
-          <Typography variant="subtitle1" color="primary">
-            Settings
-          </Typography>
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <HomeOutlinedIcon />
-              </ListItemIcon>
-              {isOpen ? <ListItemText primary="Themes" /> : null}
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <HomeOutlinedIcon />
-              </ListItemIcon>
-              {isOpen ? <ListItemText primary="Logout" /> : null}
-            </ListItem>
+            <Item
+              title="Dashboard"
+              to="/"
+              icon={<HomeOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              isCollapsed={isCollapsed}
+            />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 13px" }}
+            >
+              Data
+            </Typography>
+            <Item
+              title="Manage Team"
+              to="/team"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              isCollapsed={isCollapsed}
+            />
+            <Item
+              title="Contacts Information"
+              to="/contacts"
+              icon={<ContactsOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              isCollapsed={isCollapsed}
+            />
+            <Item
+              title="Invoices Balances"
+              to="/invoices"
+              icon={<ReceiptOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              isCollapsed={isCollapsed}
+            />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 8px" }}
+            >
+              Pages
+            </Typography>
+            <Item
+              title="Profile Form"
+              to="/form"
+              icon={<PersonOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              isCollapsed={isCollapsed}
+            />
+            <Item
+              title="Calendar"
+              to="/calendar"
+              icon={<CalendarTodayIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              isCollapsed={isCollapsed}
+            />
+            <Item
+              title="FAQ Page"
+              to="/faq"
+              icon={<HelpOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              isCollapsed={isCollapsed}
+            />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 8px" }}
+            >
+              Charts
+            </Typography>
+            <Item
+              title="Bar Chart"
+              to="/bar"
+              icon={<BarChartOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              isCollapsed={isCollapsed}
+            />
+            <Item
+              title="Pie Chart"
+              to="/pie"
+              icon={<PieChartOutlineOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              isCollapsed={isCollapsed}
+            />
+            <Item
+              title="Line Chart"
+              to="/line"
+              icon={<TimelineOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              isCollapsed={isCollapsed}
+            />
+            <Item
+              title="Geography Chart"
+              to="/geography"
+              icon={<MapOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              isCollapsed={isCollapsed}
+            />
           </List>
         </Box>
       </Drawer>
-      <Box component="main" sx={{ p: isOpen === true ? 16 : 6 }}></Box>
+      <Box component="main" sx={{ p: isCollapsed === true ? 18 : 6.5 }}></Box>
     </Box>
   );
 };
