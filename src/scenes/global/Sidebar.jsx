@@ -31,24 +31,48 @@ const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => {
     <ListItemButton
       sx={{
         mb: "10px",
+        "&.Mui-selected": {
+          color: "#6870fa !important",
+          // backgroundColor: "#2e8b57",
+        },
+        "&.Mui-focusVisible": {
+          color: "#6870fa !important",
+          // backgroundColor: "#2e8b57",
+        },
+        ":hover #icons": {
+          color: "#6870fa !important",
+          // backgroundColor: "#2e8b57",
+        },
+        ":hover": {
+          color: "#6870fa !important",
+          // backgroundColor: "#2e8b57",
+        },
       }}
       selected={selected === title}
       style={{
         color: colors.grey[100],
       }}
       onClick={() => setSelected(title)}
-      icon={icon}
     >
       <ListItemIcon
+        id="icons"
         sx={{
           minWidth: "0",
           pr: "15px",
-          // pb: "10px",
+          color: selected === title ? "#6870fa !important" : null,
         }}
       >
         {icon}
       </ListItemIcon>
-      {isCollapsed ? <Typography>{title}</Typography> : null}
+      {isCollapsed ? (
+        <Typography
+          sx={{
+            color: selected === title ? "#6870fa !important" : null,
+          }}
+        >
+          {title}
+        </Typography>
+      ) : null}
       <Link to={to} />
     </ListItemButton>
   );
@@ -57,16 +81,9 @@ const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => {
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
-  const handleOpen = () => {
-    setIsCollapsed(true);
-  };
-
-  const handleClose = () => {
-    setIsCollapsed(false);
-  };
   const toggleDrawer = () => {
     setIsCollapsed(!isCollapsed);
   };
@@ -80,19 +97,17 @@ const Sidebar = () => {
           "& .MuiDrawer-paper": {
             background: `${colors.primary[400]} !important`,
             width: "auto",
+
             transition: (theme) =>
-              theme.transitions.create("width", {
+              theme.transitions.create("margin", {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
               }),
-            boxSizing: "border-box",
+
+            // boxSizing: "border-box",
             ...(!isCollapsed && {
               overflowX: "hidden",
-              transition: (theme) =>
-                theme.transitions.create("width", {
-                  easing: theme.transitions.easing.sharp,
-                  duration: theme.transitions.duration.leavingScreen,
-                }),
+
               width: (theme) => ({
                 xs: theme.spacing(11),
                 sm: theme.spacing(12),
@@ -101,7 +116,6 @@ const Sidebar = () => {
           },
         }}
         open={isCollapsed}
-        onClose={handleClose}
       >
         <Box sx={{ px: isCollapsed === true ? 5 : 2, width: "auto" }}>
           {isCollapsed ? (
@@ -156,7 +170,7 @@ const Sidebar = () => {
                 justifyContent="center"
                 alignItems="center"
                 mb="25px"
-                mt="25px"
+                mt="15px"
               >
                 <img
                   alt="profile-user"
