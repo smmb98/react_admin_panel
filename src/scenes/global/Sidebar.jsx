@@ -28,59 +28,61 @@ const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <ListItemButton
-      sx={{
-        mb: "10px",
-        "&.Mui-selected": {
-          color: "#6870fa !important",
-          // backgroundColor: "#2e8b57",
-        },
-        "&.Mui-focusVisible": {
-          color: "#6870fa !important",
-          // backgroundColor: "#2e8b57",
-        },
-        ":hover #icons": {
-          color: "#6870fa !important",
-          // backgroundColor: "#2e8b57",
-        },
-        ":hover": {
-          color: "#6870fa !important",
-          // backgroundColor: "#2e8b57",
-        },
-      }}
-      selected={selected === title}
-      style={{
-        color: colors.grey[100],
-      }}
-      onClick={() => setSelected(title)}
-    >
-      <ListItemIcon
-        id="icons"
+    <Link to={to} style={{ textDecoration: "none" }}>
+      <ListItemButton
         sx={{
-          minWidth: "0",
-          pr: "15px",
-          color: selected === title ? "#6870fa !important" : null,
+          mb: "10px",
+          "&.Mui-selected": {
+            color: "#6870fa !important",
+            // backgroundColor: "#2e8b57",
+          },
+          "&.Mui-focusVisible": {
+            color: "#6870fa !important",
+            // backgroundColor: "#2e8b57",
+          },
+          ":hover #icons": {
+            color: "#6870fa !important",
+            // backgroundColor: "#2e8b57",
+          },
+          ":hover": {
+            color: "#6870fa !important",
+            // backgroundColor: "#2e8b57",
+          },
         }}
+        selected={selected === title}
+        style={{
+          color: colors.grey[100],
+        }}
+        onClick={() => setSelected(title)}
       >
-        {icon}
-      </ListItemIcon>
-      {isCollapsed ? (
-        <Typography
+        <ListItemIcon
+          id="icons"
           sx={{
+            minWidth: "0",
+            pr: "15px",
             color: selected === title ? "#6870fa !important" : null,
           }}
         >
-          {title}
-        </Typography>
-      ) : null}
-      <Link to={to} />
-    </ListItemButton>
+          {icon}
+        </ListItemIcon>
+        {isCollapsed ? (
+          <Typography
+            sx={{
+              color: selected === title ? "#6870fa !important" : null,
+            }}
+          >
+            {title}
+          </Typography>
+        ) : null}
+      </ListItemButton>
+    </Link>
   );
 };
 
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  // console.log(colors);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
@@ -297,7 +299,7 @@ const Sidebar = () => {
           </List>
         </Box>
       </Drawer>
-      <Box component="main" sx={{ p: isCollapsed === true ? 18 : 6.5 }}></Box>
+      <Box component="main" sx={{ p: isCollapsed === true ? 17.5 : 6 }}></Box>
     </Box>
   );
 };

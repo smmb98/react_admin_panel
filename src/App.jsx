@@ -1,7 +1,6 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import { Route, Routes } from "react-router-dom";
-// import { ProSidebarProvider } from "react-pro-sidebar/dist/components/ProSidebarProvider";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
@@ -22,7 +21,6 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={color}>
         <CssBaseline />
-        {/* <ProSidebarProvider> */}
         <div className="app">
           <Sidebar />
           <main className="content">
@@ -42,9 +40,8 @@ function App() {
             </Routes>
           </main>
         </div>
-        {/* </ProSidebarProvider> */}
       </ThemeProvider>
-    </ColorModeContext.Provider>
+    // </ColorModeContext.Provider>
   );
 }
 
