@@ -49,18 +49,18 @@ const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => {
             // backgroundColor: "#2e8b57",
           },
         }}
-        selected={selected === title}
+        selected={selected === to}
         style={{
           color: colors.grey[100],
         }}
-        onClick={() => setSelected(title)}
+        onClick={() => setSelected(to)}
       >
         <ListItemIcon
           id="icons"
           sx={{
             minWidth: "0",
             pr: "15px",
-            color: selected === title ? "#6870fa !important" : null,
+            color: selected === to ? "#6870fa !important" : null,
           }}
         >
           {icon}
@@ -68,7 +68,7 @@ const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => {
         {isCollapsed ? (
           <Typography
             sx={{
-              color: selected === title ? "#6870fa !important" : null,
+              color: selected === to ? "#6870fa !important" : null,
             }}
           >
             {title}
@@ -82,9 +82,8 @@ const Item = ({ title, to, icon, selected, setSelected, isCollapsed }) => {
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  // console.log(colors);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState("Dashboard");
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [selected, setSelected] = useState(window.location.pathname);
 
   const toggleDrawer = () => {
     setIsCollapsed(!isCollapsed);

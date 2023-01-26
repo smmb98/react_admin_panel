@@ -1,11 +1,14 @@
 import Header from "../../components/header";
+import { Box, Typography, useTheme } from "@mui/material";
 
 const Dashboard = () => {
   return (
-    <div>
-      Dashboard
-      <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-    </div>
+    <Box m="20px">
+      {/* HEADER */}
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+      </Box>
+    </Box>
   );
 };
 
